@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Actualizar el repositorio principal
-git pull origin main # Asume que tu rama principal se llama "main"
+# Update the main repository
+git pull origin main
 
-# Actualizar todos los submódulos a la última versión de sus respectivas ramas principales
+# Update all submodules to the latest version of their main branches
 git submodule update --remote --merge
 
-# Registrar los cambios en el repositorio principal
+# Commit the changes in the main repository
 git add .
-git commit -m "Actualizar todos los submódulos a las últimas versiones"
+git commit -m "Update all submodules to the latest versions"
