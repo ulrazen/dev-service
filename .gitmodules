@@ -1,0 +1,6 @@
+[submodule "services/item-service"]
+	path = services/item-service
+	url = https://github.com/ulrazen/item-service.git
+[submodule "services/user-service"]
+	path = services/user-service
+	url = https://github.com/ulrazen/user-service.git

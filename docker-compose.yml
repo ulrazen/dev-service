@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  item-service:
+    build:
+      context: ./services/item-service
+    ports:
+      - "3001:3000"
+    depends_on:
+      - dynamodb
+
+  user-service:
+    build:
+      context: ./services/user-service
+    ports:
+      - "3002:3000"
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    depends_on:
+      - userdb
+
+  userdb:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: users
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - "8008:8008"
