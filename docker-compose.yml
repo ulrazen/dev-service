@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   item-service:
+    container_name: item-service
     build:
       context: ./services/item-service
     ports:
@@ -31,8 +32,10 @@ services:
     command: dynamodb create-table --cli-input-json file://item.json --endpoint-url http://item-dynamodb:8000
     volumes:
       - ./schemas/item-service:/home/dynamodblocal
+    # AWS_ACCESS_KEY_ID can only contain letters (A–Z, a–z) and numbers (0–9).
+    # https://repost.aws/es/articles/ARc4hEkF9CRgOrw8kSMe6CwQ/troubleshooting-the-access-key-id-or-security-token-is-invalid-error-after-upgrading-dynamodb-local-to-version-2-0-or-greater
     environment:
-      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID} 
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
     depends_on:
@@ -55,22 +58,24 @@ services:
     restart: on-failure
 
   user-service:
+    container_name: user-service
     build:
       context: ./services/user-service
     ports:
       - "3002:3000"
     environment:
-      POSTGRES_DB: users
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user
+      POSTGRES_USER: ${USER_SERVICE_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${USER_SERVICE_POSTGRES_PASSWORD}
     depends_on:
       - user-db
 
   user-db:
+    container_name: user-db
     image: postgres:latest
     environment:
-      POSTGRES_DB: users
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: user
+      POSTGRES_USER: ${USER_SERVICE_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${USER_SERVICE_POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
