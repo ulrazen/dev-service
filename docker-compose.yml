@@ -7,7 +7,52 @@ services:
     ports:
       - "3001:3000"
     depends_on:
-      - dynamodb
+      - item-dynamodb
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+
+  item-dynamodb:
+   command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+   image: "amazon/dynamodb-local:latest"
+   container_name: item-dynamodb
+   user: root
+   ports:
+     - "8000:8000"
+   volumes:
+     - "./docker/dynamodb:/home/dynamodblocal/data"
+   working_dir: /home/dynamodblocal
+
+  item-dynamod-migrator:
+    image: amazon/aws-cli:latest
+    container_name: item-dynamod-migrator
+    working_dir: /home/dynamodblocal
+    command: dynamodb create-table --cli-input-json file://item.json --endpoint-url http://item-dynamodb:8000
+    volumes:
+      - ./schemas/item-service:/home/dynamodblocal
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+    depends_on:
+      - item-dynamodb
+
+  item-dynamodb-seeder:
+    image: amazon/aws-cli:latest
+    container_name: item-dynamodb-seeder
+    working_dir: /home/dynamodblocal
+    command: dynamodb batch-write-item --request-items file://item-seeder.json --endpoint-url http://item-dynamodb:8000
+    volumes:
+      - ./schemas/item-service:/home/dynamodblocal
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+    depends_on:
+      - item-dynamodb
+      - item-dynamod-migrator
+    restart: on-failure
 
   user-service:
     build:
@@ -19,9 +64,9 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     depends_on:
-      - userdb
+      - user-db
 
-  userdb:
+  user-db:
     image: postgres:latest
     environment:
       POSTGRES_DB: users
@@ -29,8 +74,3 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
-
-  dynamodb:
-    image: amazon/dynamodb-local
-    ports:
-      - "8008:8008"
