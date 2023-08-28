@@ -4,10 +4,42 @@
         "PutRequest": {
           "Item": {
             "id": {
-              "S": "1"
+              "S": "2"
             },
             "created_at": {
               "S": "20210101"
+            },
+            "Title": {
+              "S": "Sample Title 1"
+            },
+            "Price": {
+              "N": "100"
+            },
+            "Description": {
+              "S": "Sample Description 1"
+            },
+            "URLImages": {
+              "L": [
+                {
+                  "S": "https://example.com/image1.jpg"
+                },
+                {
+                  "S": "https://example.com/image2.jpg"
+                }
+              ]
+            },
+            "Atributes": {
+              "M": {
+                "color": {
+                  "S": "Red"
+                },
+                "size": {
+                  "N": "42"
+                },
+                "fabric": {
+                  "S": "N/N"
+                }
+              }
             }
           }
         }
@@ -16,10 +48,39 @@
         "PutRequest": {
           "Item": {
             "id": {
-              "S": "2"
+              "S": "3"
             },
             "created_at": {
-              "S": "20210101"
+              "S": "20210720"
+            },
+            "Title": {
+              "S": "Sample Title 2"
+            },
+            "Price": {
+              "N": "200"
+            },
+            "Description": {
+              "S": "Sample Description 2"
+            },
+            "URLImages": {
+              "L": [
+                {
+                  "S": "https://another-example.com/image3.jpg"
+                },
+                {
+                  "S": "https://another-example.com/image4.jpg"
+                }
+              ]
+            },
+            "Atributes": {
+              "M": {
+                "color": {
+                  "S": "Blue"
+                },
+                "size": {
+                  "N": "30"
+                }
+              }
             }
           }
         }
