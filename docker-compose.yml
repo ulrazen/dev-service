@@ -9,10 +9,13 @@ services:
       - "3001:3000"
     depends_on:
       - item-dynamodb
+      - item-dynamod-migrator
+      - item-dynamodb-seeder
     environment:
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+      ENV: ${ENV}
 
   item-dynamodb:
    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
