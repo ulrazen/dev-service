@@ -1,12 +1,10 @@
 {
     "TableName": "item",
     "KeySchema": [
-      { "AttributeName": "id", "KeyType": "HASH" },
-      { "AttributeName": "created_at", "KeyType": "RANGE" }
+      { "AttributeName": "id", "KeyType": "HASH" }
     ],
     "AttributeDefinitions": [
-      { "AttributeName": "id", "AttributeType": "S" },
-      { "AttributeName": "created_at", "AttributeType": "S" }
+      { "AttributeName": "id", "AttributeType": "S" }
     ],
     "ProvisionedThroughput": {
       "ReadCapacityUnits": 10,

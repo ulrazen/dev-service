@@ -4,3 +4,6 @@
 [submodule "services/user-service"]
 	path = services/user-service
 	url = https://github.com/ulrazen/user-service.git
+[submodule "services/core"]
+	path = services/core
+	url = https://github.com/ulrazen/core.git

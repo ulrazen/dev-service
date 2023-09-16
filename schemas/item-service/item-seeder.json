@@ -6,6 +6,9 @@
             "id": {
               "S": "2"
             },
+            "category": {
+              "S": "Clothes"
+            },
             "created_at": {
               "S": "20210101"
             },
@@ -49,6 +52,9 @@
           "Item": {
             "id": {
               "S": "3"
+            },
+            "category": {
+              "S": "Clothes"
             },
             "created_at": {
               "S": "20210720"
