@@ -7,9 +7,10 @@
     - [Initialize the Submodules](#initialize-the-submodules)
     - [Run Docker Compose](#run-docker-compose)
     - [Update services](#update-services)
-4. [Accessing Services](#accessing-services)
-5. [Shutting Down](#shutting-down)
-6. [Access dynamo local data](#access-dynamo-local-data)
+4. [Adding more services](#accessing-services)
+5. [Accessing Services](#accessing-services)
+6. [Shutting Down](#shutting-down)
+7. [Access dynamo local data](#access-dynamo-local-data)
 
 
 # Microservices Project
@@ -46,6 +47,9 @@ A dev service for local development consisting of multiple microservices with Do
     ```bash
     git submodule foreach git pull origin main
     ```
+
+## Adding more services
+    git submodule add [REPOSITORY-LINK] services/[SERVICE-NAME]
 
 ## Accessing Services
 
